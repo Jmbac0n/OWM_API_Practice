@@ -1,47 +1,38 @@
 import requests
 import json
 
-key = 'API Key'
+key = 'API key'
 
 url = 'http://api.openweathermap.org/data/2.5/weather?'
 
+print("Please enter a location:")
+
 location_input = input()
+
+print("")
 
 full_url = url + 'q=' + location_input + '&appid=' + key
 
 r = requests.get(full_url)
 
 x = r.json()
+
+def readout():
+
+    celsius_sub = 273.15
     
-def locationtemp():
+    owm_main = x['main']
+    owm_wind = x['wind']
+
+    temp = owm_main['temp']
+    fl_temp = owm_main['feels_like']
+    wind_spd = owm_wind['speed']
+
+    temp_celsius = temp - celsius_sub
+    fl_temp_celsius = fl_temp - celsius_sub
+
+    print("The temperature is: " + "%.2f" % temp_celsius + "C")
+    print("The temperature feels like: " + "%.2f" % fl_temp_celsius + "C")
+    print("Wind speed is: " + (str(wind_spd)) + "m/s")
     
-    y = x['main']
-
-    z = y['temp']
-
-    celsius = z - 273.15
-
-    print("The temperature is: " + "%.2f" % celsius + "C")
-
-def locationfeelslike():
-
-    y = x['main']
-
-    z = y['feels_like']
-
-    celsius = z - 273.15
-
-    print("The temperature feels like: " + "%.2f" % celsius + "C")
-
-def locationwind():
-
-    y = x['wind']
-
-    z = y['speed']
-
-    print("Wind speed is: " + (str(z)) + "m/s")
-
-
-locationtemp()
-locationfeelslike()
-locationwind()
+readout()
