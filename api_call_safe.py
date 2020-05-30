@@ -1,9 +1,12 @@
+import datetime
 import requests
 import json
 
-key = 'API key'
+key = 'API Key'
 
 url = 'http://api.openweathermap.org/data/2.5/weather?'
+
+today = datetime.datetime.now()
 
 print("Please enter a location:")
 
@@ -37,5 +40,7 @@ def readout():
     print("The temperature is: " + "%.2f" % temp_celsius + "C")
     print("The temperature feels like: " + "%.2f" % fl_temp_celsius + "C")
     print("Wind speed is: " + (str(wind_spd)) + "m/s")
-    
+    print("")
+    print(today)
+
 readout()
