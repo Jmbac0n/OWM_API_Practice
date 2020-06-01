@@ -1,3 +1,4 @@
+import sys
 import datetime
 import requests
 import json
@@ -35,12 +36,34 @@ def readout():
 
     temp_celsius = temp - celsius_sub
     fl_temp_celsius = fl_temp - celsius_sub
-    
+
+    #Outputs the results into a file
+    orig_stdout = sys.stdout
+    f = open('owm_history', 'a')
+    sys.stdout = f
+
+    print("Location: " + location_input)
+    print("")
     print("Sky status: " + sky_description['main'])
     print("The temperature is: " + "%.2f" % temp_celsius + "C")
     print("The temperature feels like: " + "%.2f" % fl_temp_celsius + "C")
     print("Wind speed is: " + (str(wind_spd)) + "m/s")
     print("")
     print(today)
+    print("")
+
+    sys.stdout = orig_stdout
+    f.close()
+
+    #Outputs the results in the console
+    print("Location: " + location_input)
+    print("")
+    print("Sky status: " + sky_description['main'])
+    print("The temperature is: " + "%.2f" % temp_celsius + "C")
+    print("The temperature feels like: " + "%.2f" % fl_temp_celsius + "C")
+    print("Wind speed is: " + (str(wind_spd)) + "m/s")
+    print("")
+    print(today)
+    print("")
 
 readout()
