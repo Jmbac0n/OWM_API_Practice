@@ -6,7 +6,7 @@ import json
 def main():
 
     #Set up for API call + Date/Time
-    key = 'API Key'
+    key = 'OWM API Key'
 
     url = 'http://api.openweathermap.org/data/2.5/weather?'
     
@@ -67,15 +67,24 @@ def main():
     print("")
     print(today)
     print("")
+    
 
     #Asks user if they want to search a new location or quit
-    print("Search new location: (y/n)")
-    reset_input = input()
-    if reset_input == ("y"):
-        print("")
-        main()
-                
+    def reset():
+        print("Search new location: (y/n)")
+        reset_input = input()
+        if reset_input == ("y"):
+            print("")
+            main()
+        elif reset_input == ("n"):
+            print("")
+            quit()
+        else:
+            print("Invalid input")
+            reset() #Keeps asking until valid input
+
+    reset()
 main()
 
 # TODO
-# Validate input for location and reset query
+# Refactor
