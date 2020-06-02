@@ -3,26 +3,28 @@ import datetime
 import requests
 import json
 
-key = 'API Key'
+def main():
 
-url = 'http://api.openweathermap.org/data/2.5/weather?'
+    #Set up for API call + Date/Time
+    key = 'OWM API Key'
 
-today = datetime.datetime.now()
+    url = 'http://api.openweathermap.org/data/2.5/weather?'
+    
+    today = datetime.datetime.now()
 
-print("Please enter a location:")
+    print("Please enter a location:")
 
-location_input = input()
+    location_input = input()
 
-print("")
+    print("")
 
-full_url = url + 'q=' + location_input + '&appid=' + key
+    full_url = url + 'q=' + location_input + '&appid=' + key
 
-r = requests.get(full_url)
+    r = requests.get(full_url)
 
-x = r.json()
+    x = r.json()
 
-def readout():
-
+    #Calls for API information
     celsius_sub = 273.15
 
     owm_weather = x['weather']
@@ -65,5 +67,24 @@ def readout():
     print("")
     print(today)
     print("")
+    
 
-readout()
+    #Asks user if they want to search a new location or quit
+    def reset():
+        print("Search new location: (y/n)")
+        reset_input = input()
+        if reset_input == ("y"):
+            print("")
+            main()
+        elif reset_input == ("n"):
+            print("")
+            quit()
+        else:
+            print("Invalid input")
+            reset() #Keeps asking until valid input
+
+    reset()
+main()
+
+# TODO
+# Refactor
