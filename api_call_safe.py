@@ -22,16 +22,8 @@ def main():
 
     x = r.json()
 
-    #Calls specified API information
-    
-    owm_weather = x['weather']
-    owm_main = x['main']
-    owm_wind = x['wind']
-
-    sky_description = owm_weather[0]
-    temp = owm_main['temp']
-    fl_temp = owm_main['feels_like']
-    wind_spd = owm_wind['speed']
+    cod_check = x['cod']
+    bad_request = "404"
 
     #Converts temperature from kelvin to celsius as a return function
 
@@ -44,6 +36,20 @@ def main():
     #Outputs the results in the console
     
     def readout():
+
+        #Calls specified API information
+    
+        owm_weather = x['weather']
+        owm_main = x['main']
+        owm_wind = x['wind']
+    
+        sky_description = owm_weather[0]
+        temp = owm_main['temp']
+        fl_temp = owm_main['feels_like']
+        wind_spd = owm_wind['speed']
+
+        #Prints it out
+
         print("Location: " + location_input)
         print("")
         print("Sky status: " + sky_description['main'])
@@ -52,6 +58,7 @@ def main():
         print("Wind speed is: " + (str(wind_spd)) + "m/s")
         print("")
         print(today)
+        print(cod_check)
         print("")
 
     #Saves the result into a file
@@ -76,16 +83,22 @@ def main():
             print("")
             quit()
         else:
-            print("Invalid input")
+            print("Invalid response")
             reset() #Keeps asking until valid input
 
+    #Checks cod variable for 404 bad request - Returned in json if API can't find location
+    if cod_check == bad_request:
+        print("Error 404: Bad request please enter another location")
+        print("")
+        main()
+    else:
     #Print readout into console + saves readout to text file + ask user to reset function
-    readout()
-    file_save()
-    reset()
+        readout()
+        file_save()
+        reset()
 main()
 
 # TODO
-# Validate Location requests: What is loc doesn't exist/not found?
 
 # Refactor TODO
+# Tidy up error checking code
